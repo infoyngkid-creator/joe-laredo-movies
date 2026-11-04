@@ -8,38 +8,21 @@ window.SITE = {
   email: "hello@joelaredo.com",            // TODO: echte Adresse
   socials: [
     { label: "Instagram", url: "#" },      // TODO
-    { label: "YouTube",   url: "#" },      // TODO
+    { label: "YouTube",   url: "https://www.youtube.com/@Joelaredo_m" },
     { label: "TikTok",    url: "#" }       // TODO
   ],
 
   films: [
     {
       featured: true,
-      title: "Title TBA",
-      year: "2026",
-      runtime: "12 min",
-      role: "Written & Directed",
-      logline: "Placeholder logline. One sentence that makes people want to press play.",
-      youtubeId: "",
-      poster: ""
-    },
-    {
-      title: "Second Film",
-      year: "2025",
-      runtime: "6 min",
-      role: "Director / Editor",
-      logline: "Placeholder logline for the second film.",
-      youtubeId: "",
-      poster: ""
-    },
-    {
-      title: "Third Film",
-      year: "2024",
-      runtime: "4 min",
-      role: "Director / DP",
-      logline: "Placeholder logline for the third film.",
-      youtubeId: "",
-      poster: ""
+      title: "Smoke Break",
+      year: "",                              // TODO: Jahr
+      runtime: "",                           // TODO: Länge, z. B. "9 min"
+      role: "Short Film",                    // TODO: z. B. "Written & Directed"
+      logline: "",                           // TODO: ein Satz zum Film
+      youtubeId: "CdCyzSpCz6s",
+      poster: ""                             // TODO: Still nach assets/smoke-break.jpg
     }
+    // weitere Filme: Block oben kopieren, mit Komma trennen
   ]
 };

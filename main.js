@@ -25,7 +25,7 @@
     $('#film-grid').innerHTML = films.map((f, i) => i === featIdx ? '' : filmHTML(f, i)).join('');
   }
   if (S.email) { const m = $('#contact-mail'); m.textContent = S.email; m.href = 'mailto:' + S.email; }
-  $('#socials').innerHTML = (S.socials || []).map(s =>
+  $('#socials').innerHTML = (S.socials || []).filter(s => s.url && s.url !== '#').map(s =>
     `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`).join('');
   $('#year').textContent = new Date().getFullYear();
 
