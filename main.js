@@ -28,6 +28,12 @@
   $('#socials').innerHTML = (S.socials || []).filter(s => s.url && s.url !== '#').map(s =>
     `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`).join('');
   $('#year').textContent = new Date().getFullYear();
+  document.querySelectorAll('[data-born]').forEach(el => {
+    const b = new Date(el.dataset.born), n = new Date();
+    let a = n.getFullYear() - b.getFullYear();
+    if (n.getMonth() < b.getMonth() || (n.getMonth() === b.getMonth() && n.getDate() < b.getDate())) a--;
+    el.textContent = a;
+  });
 
   /* ---------- player with countdown leader ---------- */
   const player = $('#player'), frame = $('#player-frame'), leader = $('#leader'), num = $('#leader-num');

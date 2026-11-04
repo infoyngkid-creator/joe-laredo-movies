@@ -5,7 +5,7 @@
    poster    = Pfad zu einem Standbild, z. B. "assets/film1.jpg" (optional)
    ===================================================================== */
 window.SITE = {
-  email: "hello@joelaredo.com",            // TODO: echte Adresse
+  email: "joe.laredo@outlook.com",
   socials: [
     { label: "Instagram", url: "#" },      // TODO
     { label: "YouTube",   url: "https://www.youtube.com/@Joelaredo_m" },
@@ -21,7 +21,7 @@ window.SITE = {
       role: "Short Film",                    // TODO: z. B. "Written & Directed"
       logline: "",                           // TODO: ein Satz zum Film
       youtubeId: "CdCyzSpCz6s",
-      poster: ""                             // TODO: Still nach assets/smoke-break.jpg
+      poster: "assets/smoke-break.jpg"
     }
     // weitere Filme: Block oben kopieren, mit Komma trennen
   ]
