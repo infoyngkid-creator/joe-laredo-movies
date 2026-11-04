@@ -29,65 +29,26 @@
     </nav>
   </header>
 
-  <!-- ============ INTRO: TRUNK SHOT ============ -->
-  <section id="intro" class="intro">
-    <div class="sky">
-      <div class="sun"></div>
-      <div class="flare"></div>
-    </div>
+  <!-- ============ INTRO: TRUNK SHOT (scene from "Smoke Break", scroll-driven) ============ -->
+  <section id="intro" class="scene">
+    <div class="scene-sticky">
+      <canvas class="scene-canvas" id="scene-canvas" aria-hidden="true"></canvas>
+      <div class="scene-vignette" aria-hidden="true"></div>
+      <div class="scene-flash" aria-hidden="true"></div>
 
-    <div class="intro-title">
-      <p class="kicker">A film by</p>
-      <h1 class="logo">Joe Laredo</h1>
-      <p class="sub">Director &middot; Music Videos &middot; Short Films</p>
-    </div>
+      <p class="scene-hint">Scroll to open the trunk<span></span></p>
 
-    <!-- two figures looking down into the trunk -->
-    <svg class="figures" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-      <g fill="#080605">
-        <!-- left: fedora, suit, leaning in -->
-        <g class="fig fig-left" transform="rotate(9 300 560)">
-          <path d="M60 560 C80 440 150 385 240 368 L360 368 C450 385 520 440 540 560 Z"/>
-          <path d="M270 325 L330 325 L342 375 L258 375 Z"/>
-          <ellipse cx="300" cy="275" rx="52" ry="62"/>
-          <ellipse cx="300" cy="224" rx="108" ry="19"/>
-          <path d="M244 224 C247 176 262 158 300 158 C338 158 353 176 356 224 Z"/>
-          <path d="M248 214 L352 214 L354 226 L246 226 Z" fill="#1d1813"/>
-          <path d="M281 372 L300 446 L319 372 Z" fill="#1d1813"/>
-        </g>
-        <!-- right: camera pointed down at you -->
-        <g class="fig fig-right" transform="rotate(-9 700 560)">
-          <path d="M460 560 C480 440 550 385 640 368 L760 368 C850 385 920 440 940 560 Z"/>
-          <path d="M670 325 L730 325 L742 375 L658 375 Z"/>
-          <ellipse cx="700" cy="262" rx="52" ry="62"/>
-          <path d="M560 480 C585 405 615 355 648 322 L680 338 C650 372 626 420 612 486 Z"/>
-          <path d="M840 480 C815 405 785 355 752 322 L720 338 C750 372 774 420 788 486 Z"/>
-          <rect x="652" y="236" width="62" height="24" rx="4"/>
-          <rect x="622" y="254" width="156" height="98" rx="10"/>
-          <circle cx="700" cy="306" r="46" fill="#15110e"/>
-          <circle cx="700" cy="306" r="31" fill="#241d18"/>
-          <circle cx="700" cy="306" r="17" fill="#060504"/>
-          <circle cx="689" cy="294" r="7" fill="#8a7558" opacity=".6"/>
-          <circle class="rec" cx="760" cy="270" r="5" fill="#c1121f"/>
-        </g>
-      </g>
-    </svg>
-
-    <div class="trunk-rim" aria-hidden="true"></div>
-
-    <!-- the lid -->
-    <div class="lid-wrap" aria-hidden="true">
-      <div class="lid">
-        <div class="seam"></div>
-        <div class="latch"></div>
+      <div class="intro-title">
+        <p class="kicker">A film by</p>
+        <h1 class="logo">Joe Laredo</h1>
+        <p class="sub">Director &middot; Music Videos &middot; Short Films</p>
       </div>
+
+      <div class="letterbox top" aria-hidden="true"></div>
+      <div class="letterbox bottom" aria-hidden="true"></div>
+      <div class="scene-load" aria-hidden="true"><span id="scene-load-bar"></span></div>
+      <a class="skip" href="#work">Skip intro</a>
     </div>
-
-    <div class="letterbox top" aria-hidden="true"></div>
-    <div class="letterbox bottom" aria-hidden="true"></div>
-
-    <button class="skip" type="button">Skip intro</button>
-    <a class="scroll-cue" href="#work">Scroll<span></span></a>
   </section>
 
   <!-- ============ CHAPTER ONE ============ -->

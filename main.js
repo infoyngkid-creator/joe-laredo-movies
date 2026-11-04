@@ -81,41 +81,85 @@
   const burn = $('.burn');
   const flashBurn = () => { if (reduce) return; burn.classList.remove('flash'); void burn.offsetWidth; burn.classList.add('flash'); };
 
-  /* ---------- animation ---------- */
+  /* ---------- intro: scroll-driven trunk scene ---------- */
   const intro = $('#intro');
-  if (!window.gsap) {           // CDN failed: show everything statically
-    document.documentElement.classList.remove('js');
-    intro.classList.add('open');
-    return;
+  const canvas = $('#scene-canvas'), ctx = canvas.getContext('2d');
+  const FRAMES = 275, FREEZE = 99, FOCUS_X = .6;
+  const src = i => `assets/scene/${String(i + 1).padStart(3, '0')}.webp`;
+  const imgs = new Array(FRAMES);
+  const scene = { f: 0 };
+  let drawn = -1;
+
+  function size() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(canvas.clientWidth * dpr);
+    canvas.height = Math.round(canvas.clientHeight * dpr);
+    drawn = -1; draw();
   }
+  function draw() {
+    let i = Math.round(scene.f);
+    while (i > 0 && !(imgs[i] && imgs[i].ok)) i--;          // nearest loaded frame
+    const img = imgs[i];
+    if (!img || !img.ok || i === drawn) return;
+    drawn = i;
+    const cw = canvas.width, ch = canvas.height, iw = img.naturalWidth, ih = img.naturalHeight;
+    const s = Math.max(cw / iw, ch / ih), w = iw * s, h = ih * s;
+    const x = Math.min(0, Math.max(cw - w, cw / 2 - w * FOCUS_X)), y = (ch - h) / 2;
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, cw, ch);
+    ctx.drawImage(img, x, y, w, h);
+  }
+  function load(i) {
+    return new Promise(res => {
+      if (imgs[i]) return res();
+      const im = new Image(); imgs[i] = im;
+      im.onload = () => { im.ok = true; if (Math.abs(i - scene.f) < 3 || drawn < 0) { drawn = -1; draw(); } res(); };
+      im.onerror = res; im.src = src(i);
+    });
+  }
+  async function loadAll() {
+    const bar = $('#scene-load-bar');
+    await Promise.all([load(0), load(FREEZE)]);
+    const order = [];
+    for (let step = 16; step >= 1; step = step / 2 | 0) {      // coarse → fine, so scrubbing works early
+      for (let i = 0; i < FRAMES; i += step) if (!imgs[i]) order.push(i);
+      if (step === 1) break;
+    }
+    let done = 2;
+    const worker = async () => { while (order.length) { await load(order.shift()); bar.style.width = (++done / FRAMES * 100) + '%'; } };
+    await Promise.all([worker(), worker(), worker(), worker()]);
+    bar.style.opacity = 0;
+  }
+  window.addEventListener('resize', size);
+
+  const staticScene = () => { intro.classList.add('static'); scene.f = FREEZE; load(FREEZE).then(size); };
+
+  if (!window.gsap) { staticScene(); return; }
   gsap.registerPlugin(ScrollTrigger);
 
-  // Trunk opens
-  const tl = gsap.timeline({ onComplete: () => intro.classList.add('open') });
-  tl.set('.lid', { rotateX: 0 })
-    .set('.figures', { yPercent: 18 })
-    .set('.sky', { filter: 'brightness(2.4)' })
-    .to('.seam', { opacity: 1, duration: .08, repeat: 5, yoyo: true, ease: 'steps(1)' }, .3)
-    .to('.seam', { opacity: 1, duration: .1 })
-    .to('.lid', { rotateX: 6, duration: .18, ease: 'power2.out' })            // the latch pops
-    .to('.lid', { rotateX: 3, duration: .25, ease: 'power1.inOut' })
-    .to('.lid', { rotateX: 82, duration: 1.5, ease: 'power3.inOut' }, '+=.25')
-    .to('.seam', { opacity: 0, duration: .3 }, '<.2')
-    .to('.sky', { filter: 'brightness(1)', duration: 1.4, ease: 'power2.out' }, '<.3')
-    .to('.figures', { yPercent: 0, duration: 1.6, ease: 'power3.out' }, '<.1')
-    .to('.kicker', { opacity: 1, duration: .5 }, '-=.6')
-    .fromTo('.logo', { opacity: 0, scale: 1.35 }, { opacity: 1, scale: 1, duration: .35, ease: 'back.out(2.5)' }, '-=.2')
-    .to('.sub', { opacity: 1, duration: .5 }, '+=.1')
-    .to('.scroll-cue', { opacity: 1, duration: .5 });
-
-  if (reduce || location.hash) tl.progress(1);
-  $('.skip').addEventListener('click', () => tl.progress(1));
-
-  // Leaving the trunk: parallax
-  gsap.timeline({ scrollTrigger: { trigger: intro, start: 'top top', end: 'bottom top', scrub: true } })
-    .to('.figures', { yPercent: 25, ease: 'none' }, 0)
-    .to('.intro-title', { yPercent: -60, opacity: 0, ease: 'none' }, 0)
-    .to('.sky', { scale: 1.15, ease: 'none' }, 0);
+  if (reduce) {
+    staticScene();
+  } else {
+    size(); loadAll();
+    const render = () => draw();
+    const tl = gsap.timeline({
+      defaults: { ease: 'none' },
+      scrollTrigger: { trigger: intro, start: 'top top', end: 'bottom bottom', scrub: .6 }
+    });
+    tl.to('.scene-hint', { opacity: 0, duration: .04 }, 0)
+      .to(scene, { f: FREEZE, duration: .5, onUpdate: render }, 0)
+      // freeze frame + name
+      .fromTo('.scene-flash', { opacity: 0 }, { opacity: .85, duration: .01 }, .5)
+      .to('.scene-flash', { opacity: 0, duration: .05 }, .51)
+      .fromTo(canvas, { filter: 'none' }, { filter: 'brightness(1.45) saturate(1.4) sepia(.18)', duration: .02 }, .5)
+      .to('.kicker', { opacity: 1, duration: .04 }, .52)
+      .fromTo('.logo', { opacity: 0, scale: 1.4, transformOrigin: '0% 100%' }, { opacity: 1, scale: 1, duration: .04, ease: 'back.out(2.5)' }, .54)
+      .to('.sub', { opacity: 1, duration: .04 }, .58)
+      // hold … then the trunk closes
+      .to('.intro-title > *', { opacity: 0, y: -20, duration: .05, stagger: .01 }, .74)
+      .to(canvas, { filter: 'none', duration: .04 }, .74)
+      .to(scene, { f: FRAMES - 1, duration: .26, onUpdate: render }, .74)
+      .to('.skip', { opacity: 0, duration: .04 }, .92);
+  }
 
   if (reduce) { document.querySelectorAll('.poster-lid').forEach(l => l.remove()); return; }
 
