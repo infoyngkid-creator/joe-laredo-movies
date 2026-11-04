@@ -9,6 +9,7 @@
     <button class="film" type="button" data-i="${i}" aria-label="Play ${esc(f.title)}">
       <div class="film-poster">
         ${f.poster ? `<img src="${esc(f.poster)}" alt="" loading="lazy">` : `<div class="ph"><span>${esc(f.title)}</span></div>`}
+        ${f.preview && !reduce ? `<video class="film-preview" src="${esc(f.preview)}" muted loop playsinline preload="none" aria-hidden="true"></video>` : ''}
         <div class="poster-light" aria-hidden="true"></div>
         <div class="poster-lid" aria-hidden="true"><span class="poster-seam"></span><span class="poster-latch"></span></div>
         <span class="play-stamp">&#9654; Play</span>
@@ -37,11 +38,31 @@
     el.textContent = a;
   });
 
+  /* ---------- hover previews ---------- */
+  const canHover = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const playPrev = (film, on) => {
+    const v = $('.film-preview', film); if (!v) return;
+    if (on) { v.preload = 'auto'; const p = v.play(); p && p.catch(() => {}); film.classList.add('previewing'); }
+    else { film.classList.remove('previewing'); setTimeout(() => { if (!film.classList.contains('previewing')) v.pause(); }, 400); }
+  };
+  document.querySelectorAll('.film').forEach(film => {
+    if (!$('.film-preview', film)) return;
+    if (canHover) {
+      film.addEventListener('pointerenter', () => playPrev(film, true));
+      film.addEventListener('pointerleave', () => playPrev(film, false));
+      film.addEventListener('focus', () => playPrev(film, true));
+      film.addEventListener('blur', () => playPrev(film, false));
+    } else if ('IntersectionObserver' in window) {   // phones: play while the poster is on screen
+      new IntersectionObserver(([e]) => playPrev(film, e.intersectionRatio > .6), { threshold: [0, .6, 1] }).observe($('.film-poster', film));
+    }
+  });
+
   /* ---------- player with countdown leader ---------- */
   const player = $('#player'), frame = $('#player-frame'), leader = $('#leader'), num = $('#leader-num');
   let timer = null, lastFocus = null;
 
   function openFilm(f) {
+    document.querySelectorAll('.film-preview').forEach(v => v.pause());
     lastFocus = document.activeElement;
     player.hidden = false; document.body.style.overflow = 'hidden';
     frame.innerHTML = ''; leader.style.display = '';
@@ -133,8 +154,44 @@
 
   const staticScene = () => { intro.classList.add('static'); scene.f = FREEZE; load(FREEZE).then(size); };
 
-  if (!window.gsap) { staticScene(); return; }
+  const preshow = $('#preshow');
+  if (!window.gsap) { preshow.remove(); staticScene(); return; }
   gsap.registerPlugin(ScrollTrigger);
+
+  /* ---------- grindhouse pre-show (once per session) ---------- */
+  let seen = false;
+  try { seen = sessionStorage.getItem('jl-preshow') === '1'; } catch (e) {}
+  if (seen || reduce || location.hash) {
+    preshow.remove();
+  } else {
+    try { sessionStorage.setItem('jl-preshow', '1'); } catch (e) {}
+    document.documentElement.classList.add('preshow-on');
+    const num = $('#ps-num');
+    const end = () => { document.documentElement.classList.remove('preshow-on'); preshow.remove(); ScrollTrigger.refresh(); };
+    const ps = gsap.timeline({ onComplete: end });
+    ps.to('.ps-frame', { opacity: 1, duration: .08, repeat: 3, yoyo: true, ease: 'steps(1)' })
+      .set('.ps-frame', { opacity: 1 })
+      .set('.ps-leader', { autoAlpha: 1 })
+      .call(() => num.textContent = '5')
+      .call(() => num.textContent = '4', null, '+=.5')
+      .call(() => num.textContent = '3', null, '+=.5')
+      .to('.ps-leader', { autoAlpha: 0, duration: .05 }, '+=.5')
+      .set('.ps-feature', { autoAlpha: 1 })
+      .fromTo('.ps-rays', { rotate: 0, scale: 1.4 }, { rotate: 25, scale: 1, duration: 2.2, ease: 'power1.out' }, '<')
+      .from('.ps-our', { scale: 3, opacity: 0, duration: .3, ease: 'power3.out' }, '<')
+      .from('.ps-feat', { scale: 2.6, opacity: 0, rotate: -6, duration: .4, ease: 'back.out(2)' }, '<.15')
+      .from('.ps-pres', { yPercent: 120, opacity: 0, duration: .35, ease: 'power3.out' }, '<.2')
+      .set('.ps-feature', { autoAlpha: 0 }, '+=1.3')
+      .set('.ps-rating', { autoAlpha: 1 })
+      .from('.ps-rating-box', { scale: 1.08, duration: 1.4, ease: 'power1.out' }, '<')
+      .addLabel('burn', '+=1.1')
+      .set('.ps-burn', { opacity: 1 }, 'burn')
+      .to(preshow, { '--r': '150vmax', duration: 1.1, ease: 'power2.in' }, 'burn');
+    const skip = () => { if (ps.time() < ps.labels.burn) ps.seek('burn'); };
+    $('.ps-skip').addEventListener('click', skip);
+    preshow.addEventListener('click', skip);
+    ['keydown', 'wheel', 'touchmove'].forEach(ev => window.addEventListener(ev, skip, { once: true, passive: true }));
+  }
 
   if (reduce) {
     staticScene();

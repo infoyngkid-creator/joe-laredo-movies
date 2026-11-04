@@ -3,6 +3,7 @@
    Hier alles eintragen, was sich ändert. Kein HTML-Wissen nötig.
    youtubeId = der Teil nach "watch?v=" im YouTube-Link
    poster    = Pfad zu einem Standbild, z. B. "assets/film1.jpg" (optional)
+   preview   = kurzer stummer Clip (3–5 s, mp4) für Hover, z. B. "assets/previews/film1.mp4" (optional)
    ===================================================================== */
 window.SITE = {
   email: "joe.laredo@outlook.com",
@@ -21,7 +22,8 @@ window.SITE = {
       role: "Short Film",                    // TODO: z. B. "Written & Directed"
       logline: "",                           // TODO: ein Satz zum Film
       youtubeId: "CdCyzSpCz6s",
-      poster: "assets/smoke-break.jpg"
+      poster: "assets/smoke-break.jpg",
+      preview: "assets/previews/smoke-break.mp4"
     }
     // weitere Filme: Block oben kopieren, mit Komma trennen
   ]
