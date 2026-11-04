@@ -302,28 +302,7 @@ a { color: inherit; }
   border: 4px solid var(--red); padding: 4px 18px; background: rgba(239,230,210,.92);
   opacity: 0; transition: opacity .25s, transform .25s cubic-bezier(.3,1.6,.5,1);
 }
-.film:hover .play-stamp, .film:focus-visible .poster-lid {
-  position: absolute; inset: 0; z-index: 3; pointer-events: none;
-  transform-origin: 50% 0%;
-  background: linear-gradient(180deg, #1a1510 0%, #0c0a08 70%, #050403 100%);
-  border-bottom: 5px solid #241e18;
-  backface-visibility: hidden;
-}
-.poster-seam {
-  position: absolute; left: 0; right: 0; bottom: -3px; height: 2px; opacity: 0;
-  background: #fff7d8; box-shadow: 0 0 14px 4px rgba(255,236,180,.85);
-}
-.poster-latch {
-  position: absolute; left: 50%; bottom: 9%; width: 64px; height: 22px; transform: translateX(-50%);
-  border: 3px solid #2f2720; border-radius: 4px; background: #110e0b;
-}
-.poster-light {
-  position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0;
-  background: radial-gradient(ellipse 70% 90% at 50% 0%, rgba(255,244,210,.85), rgba(255,220,150,.25) 45%, transparent 75%);
-  mix-blend-mode: screen;
-}
-.no-js .poster-lid, html:not(.js) .poster-lid { display: none; }
-.play-stamp {
+.film:hover .play-stamp, .film:focus-visible .play-stamp {
   opacity: 1; transform: translate(-50%, -50%) rotate(-8deg) scale(1);
 }
 .film-meta {
@@ -497,3 +476,8 @@ a { color: inherit; }
 .legal h2 { font-family: var(--f-display); text-transform: uppercase; font-weight: 400; font-size: 26px; margin: 40px 0 10px; }
 .legal p { color: var(--cream); }
 .legal .todo { background: var(--red); color: #fff; padding: 0 4px; }
+
+/* a single secondary film: smaller, offset right */
+@media (min-width: 821px) {
+  .film-grid > .film:only-child { width: 62%; margin-left: auto; }
+}

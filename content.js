@@ -24,6 +24,16 @@ window.SITE = {
       youtubeId: "CdCyzSpCz6s",
       poster: "assets/smoke-break.jpg",
       preview: "assets/previews/smoke-break.mp4"
+    },
+    {
+      title: "Viral Unforgettable Trend",
+      year: "",                              // TODO: Jahr
+      runtime: "",
+      role: "Music Video — PSGOTRICH",       // TODO: deine Rolle, z. B. "Directed & Shot"
+      logline: "",
+      youtubeId: "uBKS6CMSPg0",
+      poster: "assets/psgotrich.jpg",
+      preview: ""                            // TODO: 3–5 s Clip nach assets/previews/
     }
     // weitere Filme: Block oben kopieren, mit Komma trennen
   ]
