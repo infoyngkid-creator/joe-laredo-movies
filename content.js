@@ -7,9 +7,9 @@
 window.SITE = {
   email: "joe.laredo@outlook.com",
   socials: [
-    { label: "Instagram", url: "#" },      // TODO
+    { label: "Instagram", url: "https://www.instagram.com/joelaredo_/" },
     { label: "YouTube",   url: "https://www.youtube.com/@Joelaredo_m" },
-    { label: "TikTok",    url: "#" }       // TODO
+    { label: "TikTok",    url: "https://www.tiktok.com/@joelaredo_" }
   ],
 
   films: [

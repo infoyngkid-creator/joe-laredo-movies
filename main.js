@@ -9,6 +9,8 @@
     <button class="film" type="button" data-i="${i}" aria-label="Play ${esc(f.title)}">
       <div class="film-poster">
         ${f.poster ? `<img src="${esc(f.poster)}" alt="" loading="lazy">` : `<div class="ph"><span>${esc(f.title)}</span></div>`}
+        <div class="poster-light" aria-hidden="true"></div>
+        <div class="poster-lid" aria-hidden="true"><span class="poster-seam"></span><span class="poster-latch"></span></div>
         <span class="play-stamp">&#9654; Play</span>
       </div>
       <div class="film-meta">
@@ -115,7 +117,7 @@
     .to('.intro-title', { yPercent: -60, opacity: 0, ease: 'none' }, 0)
     .to('.sky', { scale: 1.15, ease: 'none' }, 0);
 
-  if (reduce) return;
+  if (reduce) { document.querySelectorAll('.poster-lid').forEach(l => l.remove()); return; }
 
   // Chapter cards
   gsap.utils.toArray('.chapter').forEach(ch => {
@@ -126,10 +128,22 @@
     ScrollTrigger.create({ trigger: ch, start: 'top 40%', onEnter: flashBurn });
   });
 
-  // Films
+  // Films: each poster is a trunk that opens as you scroll
   gsap.utils.toArray('.film').forEach(el => {
-    gsap.from(el, { y: 60, opacity: 0, duration: .9, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 88%' } });
+    const poster = $('.film-poster', el), lid = $('.poster-lid', el), seam = $('.poster-seam', el),
+          light = $('.poster-light', el), media = $('img, .ph', poster), meta = el.querySelectorAll('.film-meta, .film-logline');
+    gsap.set(meta, { opacity: 0, y: 24 });
+    const t = gsap.timeline({ scrollTrigger: { trigger: poster, start: 'top 85%', end: 'top 25%', scrub: .6 } });
+    t.fromTo(seam, { opacity: 0 }, { opacity: 1, duration: .12 })
+     .to(lid, { rotateX: 4, duration: .08 })
+     .to(lid, { rotateX: 2, duration: .06 })
+     .to(lid, { rotateX: 96, duration: .55, ease: 'power2.inOut' })
+     .to(seam, { opacity: 0, duration: .1 }, '<.15')
+     .fromTo(light, { opacity: 0 }, { opacity: 1, duration: .15 }, '<')
+     .to(light, { opacity: 0, duration: .35 })
+     .fromTo(media, { scale: 1.18, filter: 'brightness(.25)' }, { scale: 1, filter: 'brightness(1)', duration: .6 }, '<-.3');
+    gsap.to(meta, { opacity: 1, y: 0, stagger: .1, duration: .7, ease: 'power2.out',
+      scrollTrigger: { trigger: poster, start: 'top 40%' } });
   });
 
   // Freeze frame
