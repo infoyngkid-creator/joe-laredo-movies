@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Joe Laredo — Director</title>
+  <meta name="description" content="Joe Laredo – filmmaker. Music videos, short films and visuals for artists.">
+  <meta name="theme-color" content="#0b0a08">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Rye&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+  <!-- film texture -->
+  <div class="grain" aria-hidden="true"></div>
+  <div class="scratch" aria-hidden="true"></div>
+  <div class="burn" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a href="#intro" class="nav-logo">J<span>L</span></a>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#craft">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- ============ INTRO: TRUNK SHOT ============ -->
+  <section id="intro" class="intro">
+    <div class="sky">
+      <div class="sun"></div>
+      <div class="flare"></div>
+    </div>
+
+    <div class="intro-title">
+      <p class="kicker">A film by</p>
+      <h1 class="logo">Joe Laredo</h1>
+      <p class="sub">Director &middot; Music Videos &middot; Short Films</p>
+    </div>
+
+    <!-- two figures looking down into the trunk -->
+    <svg class="figures" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <g fill="#080605">
+        <!-- left: fedora, suit, leaning in -->
+        <g class="fig fig-left" transform="rotate(9 300 560)">
+          <path d="M60 560 C80 440 150 385 240 368 L360 368 C450 385 520 440 540 560 Z"/>
+          <path d="M270 325 L330 325 L342 375 L258 375 Z"/>
+          <ellipse cx="300" cy="275" rx="52" ry="62"/>
+          <ellipse cx="300" cy="224" rx="108" ry="19"/>
+          <path d="M244 224 C247 176 262 158 300 158 C338 158 353 176 356 224 Z"/>
+          <path d="M248 214 L352 214 L354 226 L246 226 Z" fill="#1d1813"/>
+          <path d="M281 372 L300 446 L319 372 Z" fill="#1d1813"/>
+        </g>
+        <!-- right: camera pointed down at you -->
+        <g class="fig fig-right" transform="rotate(-9 700 560)">
+          <path d="M460 560 C480 440 550 385 640 368 L760 368 C850 385 920 440 940 560 Z"/>
+          <path d="M670 325 L730 325 L742 375 L658 375 Z"/>
+          <ellipse cx="700" cy="262" rx="52" ry="62"/>
+          <path d="M560 480 C585 405 615 355 648 322 L680 338 C650 372 626 420 612 486 Z"/>
+          <path d="M840 480 C815 405 785 355 752 322 L720 338 C750 372 774 420 788 486 Z"/>
+          <rect x="652" y="236" width="62" height="24" rx="4"/>
+          <rect x="622" y="254" width="156" height="98" rx="10"/>
+          <circle cx="700" cy="306" r="46" fill="#15110e"/>
+          <circle cx="700" cy="306" r="31" fill="#241d18"/>
+          <circle cx="700" cy="306" r="17" fill="#060504"/>
+          <circle cx="689" cy="294" r="7" fill="#8a7558" opacity=".6"/>
+          <circle class="rec" cx="760" cy="270" r="5" fill="#c1121f"/>
+        </g>
+      </g>
+    </svg>
+
+    <div class="trunk-rim" aria-hidden="true"></div>
+
+    <!-- the lid -->
+    <div class="lid-wrap" aria-hidden="true">
+      <div class="lid">
+        <div class="seam"></div>
+        <div class="latch"></div>
+      </div>
+    </div>
+
+    <div class="letterbox top" aria-hidden="true"></div>
+    <div class="letterbox bottom" aria-hidden="true"></div>
+
+    <button class="skip" type="button">Skip intro</button>
+    <a class="scroll-cue" href="#work">Scroll<span></span></a>
+  </section>
+
+  <!-- ============ CHAPTER ONE ============ -->
+  <section class="chapter" data-burn>
+    <p class="chapter-num">Chapter One</p>
+    <h2 class="chapter-title">The Work</h2>
+  </section>
+
+  <section id="work" class="work">
+    <div class="featured" id="featured"></div>
+    <div class="film-grid" id="film-grid"></div>
+  </section>
+
+  <!-- ============ CHAPTER TWO ============ -->
+  <section class="chapter" data-burn>
+    <p class="chapter-num">Chapter Two</p>
+    <h2 class="chapter-title">The Man</h2>
+  </section>
+
+  <section id="about" class="about">
+    <figure class="freeze">
+      <div class="freeze-img">
+        <!-- TODO: Foto nach assets/joe.jpg legen -->
+        <img src="assets/joe.jpg" alt="Portrait of Joe Laredo" onerror="this.remove()">
+        <span class="freeze-placeholder">Photo</span>
+      </div>
+      <figcaption class="freeze-callout">
+        <span class="callout-name">Joe Laredo</span>
+        <span class="callout-role">The Director</span>
+      </figcaption>
+    </figure>
+    <div class="about-text">
+      <p class="lead">I make films that hit like the first chorus.</p>
+      <p>Placeholder bio. Where you're from, what drives you, what you've shot so far.
+         Short, confident, a little dangerous. Two or three paragraphs, tops.</p>
+      <p>Based in Germany. Available worldwide.</p>
+    </div>
+  </section>
+
+  <!-- ============ CHAPTER THREE ============ -->
+  <section class="chapter" data-burn>
+    <p class="chapter-num">Chapter Three</p>
+    <h2 class="chapter-title">The Craft</h2>
+  </section>
+
+  <section id="craft" class="craft">
+    <ol class="services">
+      <li>
+        <span class="svc-num">01</span>
+        <h3>Music Videos</h3>
+        <p>Concept, direction, shoot and edit. Visuals that sound like your record.</p>
+      </li>
+      <li>
+        <span class="svc-num">02</span>
+        <h3>Short Films</h3>
+        <p>Narrative work with real characters and a real point of view.</p>
+      </li>
+      <li>
+        <span class="svc-num">03</span>
+        <h3>Visuals for Artists</h3>
+        <p>Visualizers, teasers, behind-the-scenes and social cuts for releases and tours.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ============ FINAL CHAPTER ============ -->
+  <section class="chapter" data-burn>
+    <p class="chapter-num">Final Chapter</p>
+    <h2 class="chapter-title">The Deal</h2>
+  </section>
+
+  <section id="contact" class="contact">
+    <p class="contact-kicker">Got a song, a story or a crazy idea?</p>
+    <a class="contact-mail" id="contact-mail" href="#">hello@joelaredo.com</a>
+    <ul class="socials" id="socials"></ul>
+
+    <div class="credits">
+      <p><span>Written &amp; Directed by</span>Joe Laredo</p>
+      <p><span>Shot by</span>Joe Laredo</p>
+      <p><span>Edited by</span>Joe Laredo</p>
+      <p><span>Starring</span>You?</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>&copy; <span id="year"></span> Joe Laredo</span>
+    <a href="impressum.html">Impressum &amp; Datenschutz</a>
+  </footer>
+
+  <!-- ============ PLAYER ============ -->
+  <div class="player" id="player" hidden>
+    <button class="player-close" type="button" aria-label="Close">&times;</button>
+    <div class="leader" id="leader">
+      <div class="leader-sweep"></div>
+      <span class="leader-num" id="leader-num">3</span>
+    </div>
+    <div class="player-frame" id="player-frame"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="content.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
